@@ -12,7 +12,7 @@ import { Architects_Daughter } from "next/font/google";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { apiClient } from "@/lib";
-import { useAppStore } from "@/store";
+
 import { ADMIN_API_ROUTES } from "@/utils/api-routes";
 
 const ArchitectsDaughter = Architects_Daughter({
@@ -23,7 +23,7 @@ const ArchitectsDaughter = Architects_Daughter({
 
 const Login = () => {
   const router = useRouter();
-  const { setUserInfo } = useAppStore();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
@@ -32,7 +32,6 @@ const Login = () => {
       password,
     });
     if (response.data.userInfo) {
-      setUserInfo(response.data.userInfo);
       router.push("/admin");
     }
   };
@@ -58,7 +57,7 @@ const Login = () => {
             />
             <span className="text-xl uppercase font-medium italic text-white">
               <span className={ArchitectsDaughter.className}>
-                ARKLYTE Admin Login
+                TripScape Admin Login
               </span>
             </span>
           </div>
