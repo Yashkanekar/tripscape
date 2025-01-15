@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Tabs,
   Tab,
@@ -11,16 +11,21 @@ import {
   Listbox,
   ListboxItem,
 } from "@nextui-org/react";
+// import { CurrentlyScrapingTable } from "./components/currently-scraping-table";
+// import ScrapingQueue from "@/components/admin/scraping-queue/scraping-queue";
+import { apiClient } from "@/lib";
+import { ADMIN_API_ROUTES } from "@/utils/api-routes";
 
 const ScrapeTrips = () => {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState<undefined | string>(
     undefined
   );
+  const [jobs, setJobs] = useState([]);
 
   const searchCities = async (searchQuery: string) => {
     const response = await fetch(
-      `https://secure.geonames.org/searchJSON?q=${searchQuery}&maxRows=5&username=yash&style=SHORT`
+      `https://secure.geonames.org/searchJSON?q=${searchQuery}&maxRows=5&username=kishan&style=SHORT`
     );
     const parsed = await response.json();
     setCities(
@@ -28,12 +33,33 @@ const ScrapeTrips = () => {
     );
   };
 
+  const startScraping = async () => {
+    await apiClient.post(ADMIN_API_ROUTES.CREATE_JOB, {
+      url:
+        "https://packages.yatra.com/holidays/intl/search.htm?destination=" +
+        selectedCity,
+      jobType: { type: "location" },
+    });
+  };
+
+  useEffect(() => {
+    // const getData = async () => {
+    //   const data = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+    //   setJobs(data.data.jobs);
+    // };
+    // const interval = setInterval(() => getData(), 3000);
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
+
   return (
     <section className="m-10 grid grid-cols-3 gap-5">
       <Card className="col-span-2">
         <CardBody>
           <Tabs>
-            <Tab key="location" title="Location">
+            <Tab key="lcoation" title="Location">
               <Input
                 type="text"
                 label="Search for a Location"
@@ -87,11 +113,20 @@ const ScrapeTrips = () => {
               <h1 className="text-xl">Scrape data for {selectedCity}</h1>
             )}
           </div>
-          <Button size="lg" className="w-full" color="primary">
+          <Button
+            onClick={startScraping}
+            size="lg"
+            className="w-full"
+            color="primary"
+          >
             Scrape
           </Button>
         </CardFooter>
       </Card>
+      {/* <ScrapingQueue /> */}
+      <div className="col-span-3">
+        {/* <CurrentlyScrapingTable jobs={jobs} /> */}
+      </div>
     </section>
   );
 };
