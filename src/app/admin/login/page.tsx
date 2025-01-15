@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { apiClient } from "@/lib";
 
 import { ADMIN_API_ROUTES } from "@/utils/api-routes";
+import { useAppStore } from "@/store";
 
 const ArchitectsDaughter = Architects_Daughter({
   weight: "400", // if single weight, otherwise you use array like [400, 500, 700],
@@ -26,12 +27,14 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserInfo } = useAppStore();
   const handleLogin = async () => {
     const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
       email,
       password,
     });
     if (response.data.userInfo) {
+      setUserInfo(response.data.userInfo);
       router.push("/admin");
     }
   };
