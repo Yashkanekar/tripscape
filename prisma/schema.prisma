@@ -14,8 +14,17 @@ datasource db {
 }
 
 model Admin {
-  id Int @default(autoincrement()) @id
-  email String @unique
-  password String
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
+}
+
+model Jobs {
+  id         Int      @id @default(autoincrement())
+  url        String
+  isComplete Boolean  @default(false)
+  status     String   @default("active")
+  jobType    Json
+  createdAt  DateTime @default(now())
 }

@@ -30,6 +30,7 @@ const Login = () => {
   // const { setUserInfo } = useAppStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUserInfo } = useAppStore();
   const handleLogin = async () => {
     // const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
     //   email,
