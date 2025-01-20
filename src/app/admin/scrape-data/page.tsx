@@ -11,10 +11,10 @@ import {
   Listbox,
   ListboxItem,
 } from "@nextui-org/react";
-// import { CurrentlyScrapingTable } from "./components/currently-scraping-table";
 import { apiClient } from "@/lib";
 import { ADMIN_API_ROUTES } from "@/utils/api-routes";
 import { ScrapingQueue } from "@/components/admin/scraping-queue";
+import { CurrentlyScrapingTable } from "./components/currently-scraping-table";
 
 const ScrapeTrips = () => {
   const [cities, setCities] = useState([]);
@@ -125,7 +125,7 @@ const ScrapeTrips = () => {
       </Card>
       <ScrapingQueue />
       <div className="col-span-3">
-        {/* <CurrentlyScrapingTable jobs={jobs} /> */}
+        <CurrentlyScrapingTable jobs={jobs} />
       </div>
     </section>
   );
