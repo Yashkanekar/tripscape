@@ -12,9 +12,9 @@ import {
   ListboxItem,
 } from "@nextui-org/react";
 // import { CurrentlyScrapingTable } from "./components/currently-scraping-table";
-// import ScrapingQueue from "@/components/admin/scraping-queue/scraping-queue";
 import { apiClient } from "@/lib";
 import { ADMIN_API_ROUTES } from "@/utils/api-routes";
+import { ScrapingQueue } from "@/components/admin/scraping-queue";
 
 const ScrapeTrips = () => {
   const [cities, setCities] = useState([]);
@@ -43,15 +43,15 @@ const ScrapeTrips = () => {
   };
 
   useEffect(() => {
-    // const getData = async () => {
-    //   const data = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
-    //   setJobs(data.data.jobs);
-    // };
-    // const interval = setInterval(() => getData(), 3000);
+    const getData = async () => {
+      const data = await apiClient.get(ADMIN_API_ROUTES.JOB_DETAILS);
+      setJobs(data.data.jobs);
+    };
+    const interval = setInterval(() => getData(), 3000);
 
-    // return () => {
-    //   clearInterval(interval);
-    // };
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -123,7 +123,7 @@ const ScrapeTrips = () => {
           </Button>
         </CardFooter>
       </Card>
-      {/* <ScrapingQueue /> */}
+      <ScrapingQueue />
       <div className="col-span-3">
         {/* <CurrentlyScrapingTable jobs={jobs} /> */}
       </div>

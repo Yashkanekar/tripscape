@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   if (!email || !password) {
     return NextResponse.json(
       { message: "Email and password is required." },
-      { status: 400 }         
+      { status: 400 }
     );
   }
 
@@ -27,8 +27,10 @@ export async function POST(request: Request) {
     const user = await prisma.admin.findUnique({
       where: { email, password: sha256(password).toString() },
     });
+    console.log({ password: sha256(password).toString() });
 
     if (!user) {
+      console.log("inside no user case");
       return NextResponse.json(
         { msg: "Invalid Email or Password" },
         { status: 404 }

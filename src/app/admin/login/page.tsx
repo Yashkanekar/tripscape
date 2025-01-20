@@ -12,6 +12,9 @@ import { Inter } from "next/font/google";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Poppins } from "next/font/google";
+import { ADMIN_API_ROUTES } from "@/utils/api-routes";
+import { apiClient } from "@/lib";
+import { useAppStore } from "@/store";
 
 // import { apiClient } from "@/lib";
 // import { useAppStore } from "@/store";
@@ -27,19 +30,19 @@ const poppins = Poppins({ subsets: ["latin"], weight: "700" });
 
 const Login = () => {
   const router = useRouter();
-  // const { setUserInfo } = useAppStore();
+  const { setUserInfo } = useAppStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUserInfo } = useAppStore();
   const handleLogin = async () => {
-    // const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
-    //   email,
-    //   password,
-    // });
-    // if (response.data.userInfo) {
-    //   setUserInfo(response.data.userInfo);
-    //   router.push("/admin");
-    // }
+    const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
+      email,
+      password,
+    });
+    console.log(response);
+    if (response.data.userInfo) {
+      setUserInfo(response.data.userInfo);
+      router.push("/admin");
+    }
   };
 
   return (
@@ -101,7 +104,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 color="danger"
-                // variant="bordered"  
+                // variant="bordered"
               />
               <Input
                 placeholder="Password"
@@ -116,7 +119,7 @@ const Login = () => {
             <Button
               color="danger"
               variant="shadow"
-              onClick={handleLogin}
+              onPress={handleLogin}
               className="w-full capitalize"
               size="lg"
             >

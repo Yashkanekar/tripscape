@@ -1,21 +1,20 @@
 import { NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 
-
-import { importQueue } from "../../../../lib/queue";
-
-export async function POST(request: Request) {
+export async function GET() {
   try {
-    const { url, jobType } = await request.json();
-    const response = await prisma.jobs.create({ data: { url, jobType } });
+    const jobs = await prisma.jobs.findMany({ orderBy: { createdAt: "desc" } });
+    const onGoingJobs = await prisma.jobs.findMany({
+      where: { isComplete: false },
+    });
 
-    await importQueue.add("new location", { url, jobType, id: response.id });
     return NextResponse.json(
       {
-        jobCreated: true,
+        jobs,
+        onGoingJobs: onGoingJobs?.length ?? 0,
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
