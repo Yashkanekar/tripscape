@@ -15,6 +15,7 @@ import { Poppins } from "next/font/google";
 import { ADMIN_API_ROUTES } from "@/utils/api-routes";
 import { apiClient } from "@/lib";
 import { useAppStore } from "@/store";
+import axios from "axios";
 
 // import { apiClient } from "@/lib";
 // import { useAppStore } from "@/store";
@@ -34,7 +35,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
-    const response = await apiClient.post(ADMIN_API_ROUTES.LOGIN, {
+    const response = await axios.post(ADMIN_API_ROUTES.LOGIN, {
       email,
       password,
     });

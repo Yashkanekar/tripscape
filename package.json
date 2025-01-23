@@ -12,16 +12,23 @@
     "@nextui-org/react": "^2.6.11",
     "@prisma/client": "^6.2.1",
     "axios": "^1.7.9",
+    "bullmq": "^5.35.0",
     "crypto-js": "^4.2.0",
     "framer-motion": "^11.16.0",
+    "ioredis": "^5.4.2",
     "jose": "^5.9.6",
     "next": "14.0.4",
+    "path": "^0.12.7",
     "prisma": "^6.2.1",
+    "puppeteer": "^24.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.4.0",
     "react-pro-sidebar": "^1.1.0",
     "zustand": "^5.0.3"
+  },
+  "browser": {
+    "child_process": false
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
