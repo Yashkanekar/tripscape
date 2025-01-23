@@ -12,9 +12,9 @@ import {
   MenuItem,
   sidebarClasses,
 } from "react-pro-sidebar";
-import { Architects_Daughter } from "next/font/google";
+import {  Inter } from "next/font/google";
 
-const ArchitectsDaughter = Architects_Daughter({
+const inter = Inter({
   weight: "400", // if single weight, otherwise you use array like [400, 500, 700],
   style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
   subsets: ["latin"],
@@ -94,7 +94,7 @@ const Sidebar = () => {
               onClick={() => router.push("/admin/dashboard")}
             />
             <span className="text-3xl uppercase font-medium italic">
-              <span className={ArchitectsDaughter.className}>TripScape</span>
+              <span className={inter.className}>TripScape</span>
             </span>
           </div>
 

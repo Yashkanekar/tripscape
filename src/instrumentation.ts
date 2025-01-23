@@ -1,5 +1,6 @@
 import prisma from "./lib/prisma";
 import { startLocationScraping } from "./scraping/location-scraping";
+import { startPackageScraping } from "./scraping/package-scraping";
 
 export const register = async () => {
   //This if statement is important, read here: https://nextjs.org/docs/app/building-your-application/optimizing/instrumentation
@@ -55,17 +56,19 @@ export const register = async () => {
             }
           } else if (job.data.jobType.type === "package") {
             console.log(job.data);
-            // const alreadyScrapped = await prisma.trips.findUnique({
-            //   where: { id: job.data.packageDetails.id },
-            // });
-            // if (!alreadyScrapped) {
-            //   console.log("Connected! Navigating to " + job.data.url);
-            //   await page.goto(job.data.url, { timeout: 120000 });
-            //   console.log("Navigated! Scraping page content...");
-            //   const pkg = await startPackageScraping(
-            //     page,
-            //     job.data.packageDetails
-            //   );
+            const alreadyScrapped = await prisma.trips.findUnique({
+              where: { id: job.data.packageDetails.id },
+            });
+            if (!alreadyScrapped) {
+              console.log("Connected! Navigating to " + job.data.url);
+              await page.goto(job.data.url, { timeout: 120000 });
+              console.log("Navigated! Scraping page content...");
+              const pkg = await startPackageScraping(
+                page,
+                job.data.packageDetails
+              );
+              console.log(pkg);
+            }
             //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //   // @ts-ignore
             //   await prisma.trips.create({ data: pkg });
